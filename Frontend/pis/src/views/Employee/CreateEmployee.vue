@@ -1,29 +1,31 @@
 <template>
 	<div id="createemployee">
-		<h4 class="mb-0">Create Employee</h4>
-		<p>Fill all the fields to register new employee.</p>
-		<div class="px-5 py-3 bg-white rounded">
-			<form-wizard @on-complete="onComplete" step-size="sm" color="#2ACB91">
-				<h5 slot="title" hidden></h5>
-				<tab-content icon="fas fa-user" title="Basic Information">
-					<BasicInformation @newdata="getBasic($event)"></BasicInformation>
-				</tab-content>
-				<tab-content icon="fas fa-school" title="Educational Background">
-					<EducationalBackground @newdata="getEducation($event)"></EducationalBackground>
-				</tab-content>
-				<tab-content icon="fas fa-user" title="Additional Information">
-					<AdditionalInformation @newdata="getAdditional($event)"></AdditionalInformation>
-				</tab-content>
-				<tab-content icon="fas fa-user" title="Position Details">
-					<PositionDetails @newdata="getPosition($event)"></PositionDetails>
-				</tab-content>
-				<tab-content icon="fas fa-user" title="Payroll Details">
-					<PayrollDetails @newdata="getPayroll($event)"></PayrollDetails>
-				</tab-content>
-				<tab-content icon="fas fa-user" title="Upload Image">
-					<UploadImage @newdata="getImage($event)"></UploadImage>
-				</tab-content>
-			</form-wizard>
+		<div class="p-5 bg-white rounded">
+			<div class="px-5">
+				<h4 class="mb-0">Create Employee</h4>
+				<p>Fill all the fields to register new employee.</p>
+				<form-wizard @on-complete="onComplete" step-size="sm" color="#2ACB91">
+					<h5 slot="title" hidden></h5>
+					<tab-content icon="fas fa-user" title="Basic Information">
+						<BasicInformation @newdata="getBasic($event)"></BasicInformation>
+					</tab-content>
+					<tab-content icon="fas fa-school" title="Educational Background">
+						<EducationalBackground @newdata="getEducation($event)"></EducationalBackground>
+					</tab-content>
+					<tab-content icon="fas fa-user" title="Additional Information">
+						<AdditionalInformation @newdata="getAdditional($event)"></AdditionalInformation>
+					</tab-content>
+					<tab-content icon="fas fa-user" title="Position Details">
+						<PositionDetails @newdata="getPosition($event)"></PositionDetails>
+					</tab-content>
+					<tab-content icon="fas fa-user" title="Payroll Details">
+						<PayrollDetails @newdata="getPayroll($event)"></PayrollDetails>
+					</tab-content>
+					<tab-content icon="fas fa-user" title="Upload Image">
+						<UploadImage @newdata="getImage($event)"></UploadImage>
+					</tab-content>
+				</form-wizard>
+			</div>
 		</div>
 	</div>
 </template>

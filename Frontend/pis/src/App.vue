@@ -34,14 +34,14 @@
           <div class="sidebar-menu">
             <ul>
               <li>
-                <a href="#" @click="()=>{this.$router.push({name: 'Dashboard'})}">
-                  <i class="far fa-gem"></i>
+                <a href="" @click="()=>{this.$router.push({name: 'Dashboard'})}">
+                  <i class="fa fa-tachometer-alt"></i>
                   <span>Dashboard</span>
                 </a>
               </li>
               <li class="sidebar-dropdown">
-                <a href="#">
-                  <i class="fa fa-tachometer-alt"></i>
+                <a href="">
+                  <i class="fa fa-building"></i>
                   <span>Company</span>
                   <span class="badge badge-pill badge-warning">New</span>
                 </a>
@@ -57,61 +57,61 @@
               </li>
               <li>
                 <a href="#">
-                  <i class="fa fa-shopping-cart"></i>
+                  <i class="fa fa-university"></i>
                   <span>Department</span>
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <i class="far fa-gem"></i>
+                  <i class="fa fa-briefcase"></i>
                   <span>Project</span>
                 </a>
               </li>
               <li>
-                <a href="#" @click="()=>{this.$router.push({name: 'CreateEmployee'})}">
-                  <i class="far fa-gem"></i>
+                <a href="" @click="()=>{this.$router.push({name: 'CreateEmployee'})}">
+                  <i class="fa fa-user-tie"></i>
                   <span>Employee</span>
                 </a>
               </li>
               <li>
-                <a href="#">
-                  <i class="far fa-gem"></i>
+                <a href="" @click="()=>{this.$router.push({name: 'CreateUser'})}">
+                  <i class="fa fa-user-alt"></i>
                   <span>User</span>
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <i class="far fa-gem"></i>
+                  <i class="fa fa-money-check"></i>
                   <span>Payroll Group</span>
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <i class="far fa-gem"></i>
+                  <i class="fa fa-credit-card"></i>
                   <span>Compensation</span>
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <i class="far fa-gem"></i>
+                  <i class="fa fa-funnel-dollar"></i>
                   <span>Deduction</span>
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <i class="far fa-gem"></i>
+                  <i class="fa fa-calendar-times"></i>
                   <span>Leave</span>
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <i class="far fa-gem"></i>
+                  <i class="fa fa-file-invoice"></i>
                   <span>Leave Credits</span>
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <i class="far fa-gem"></i>
+                  <i class="fa fa-book"></i>
                   <span>Journal Category</span>
                 </a>
               </li>
@@ -123,6 +123,10 @@
       </nav>
       <!-- sidebar-wrapper  -->
       <main class="page-content">
+        <div class="w-100 bg-white mt-0 d-flex p-3 justify-content-end">
+          <label class="align-self-center m-0 mr-2 p-0">Charlie Ching Olivera</label>
+          <img class="img-responsive rounded-circle align-self-center" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg" alt="User picture" style="width: 30px; height: 30px">
+        </div>
         <router-view/>
       </main>
       <!-- page-content" -->
@@ -885,7 +889,6 @@ body {
   display: inline-block;
   width: 100%;
   padding-left: 0px;
-  padding-top: 20px;
 }
 
 .page-wrapper .page-content > div {
