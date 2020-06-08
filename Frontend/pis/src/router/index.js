@@ -12,6 +12,9 @@ import Dashboard from '../views/Dashboard.vue'
 // Employee
 import CreateEmployee from '../views/Employee/CreateEmployee.vue'
 
+// User
+import CreateUser from '../views/User/CreateUser.vue'
+
 Vue.use(VueRouter)
 
   const routes = [
@@ -39,6 +42,11 @@ Vue.use(VueRouter)
     path: '/CreateEmployee',
     name: 'CreateEmployee',
     component: CreateEmployee
+  },
+  {
+    path: '/CreateUser',
+    name: 'CreateUser',
+    component: CreateUser
   },
 ]
 
