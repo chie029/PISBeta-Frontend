@@ -18,3 +18,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/compensation', 'CompensationController@index');
 Route::post('/compensation/store', 'CompensationController@store');
 Route::post('/compensation/update', 'CompensationController@update');
+
+// Deduction API
+Route::get('/deduction', 'DeductionController@index');
+Route::post('/deduction/store', 'DeductionController@store');
+Route::post('/deduction/update', 'DeductionController@update');
+Route::post('/deduction/archive', 'DeductionController@archive');
+Route::get('/deduction/archived', 'DeductionController@archived');

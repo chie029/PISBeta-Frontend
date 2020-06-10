@@ -30,11 +30,11 @@ Route::post('/project/update', 'ProjectController@update');
 Route::get('/employee', 'EmployeeController@index');
 Route::post('/employee/store', 'EmployeeController@store');
 Route::post('/employee/update', 'EmployeeController@update');
-Route::post('/employee/createUser', 'EmployeeController@createUser');
-Route::post('/login', 'EmployeeController@login');
+Route::post('/employee/assignCompensation', 'EmployeeController@assignCompensation');
 
-Route::get('/education', 'EducationController@index');
-Route::post('/education/store', 'EducationController@store');
-Route::post('/education/update', 'EducationController@update');
+Route::post('/user/createUser', 'UserController@createUser');
+Route::post('/login', 'UserController@login');
 
-Route::post('/send', 'SendEmailController@sendEmail');
+Route::post('/send', 'ForgotPasswordController@sendEmail');
+Route::post('/confirmCode', 'ForgotPasswordController@checkCode');
+Route::post('/changePassword', 'ForgotPasswordController@changePassword');

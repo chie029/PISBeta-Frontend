@@ -26,6 +26,7 @@
                   <button type="submit" class="btn btn-warning text-white border-0 btn-block">
                     Login
                   </button>
+                  {{errors}}
                   <div class="float-right">
                     <a class="small text-white" href="" @click="forgotPassword()">Forgot Password?</a>
                   </div>
@@ -46,17 +47,18 @@ export default {
     return {
       email: '',
       password: '',
-      errors: null,
+      errors: [],
     }
   },
   methods : { 
     login(e){
       e.preventDefault();
-      this.axios.post('http://127.0.0.1:8000/api/user/login', {
+      this.axios.post(this.$store.state.employee + 'login', {
         email: this.email,
         password: this.password
         })
       .then(response => {
+        this.errors.push(response.data)
         this.$session.start()
         this.$session.set('user', response.data.user)
         this.$session.set('image', response.data.user.image)

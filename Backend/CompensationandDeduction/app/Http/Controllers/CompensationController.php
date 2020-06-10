@@ -51,7 +51,7 @@ class CompensationController extends Controller
             if ($compensationid == null) {
                 $newid = "CMP_0001";
             } else {
-                $count = explode('_', $employeeid['compensation_id']);
+                $count = explode('_', $compensationid['compensation_id']);
                 $addcount = $count[1] + 1;
                 if ($addcount < 10) { $newid = "CMP_" . "000" . $addcount; } else { $newid = "CMP_" . "00" . $addcount;}
             };
@@ -89,7 +89,6 @@ class CompensationController extends Controller
      */
     public function update(Request $request, Compensation $compensation)
     {
-
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'amount' => 'required',

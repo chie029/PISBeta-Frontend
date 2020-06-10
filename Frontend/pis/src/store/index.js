@@ -8,6 +8,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    app_url: 'http://localhost:9000',
+    api_host : 'charlie',
   },
   mutations: {
   },

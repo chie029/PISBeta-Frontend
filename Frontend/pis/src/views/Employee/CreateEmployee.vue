@@ -83,12 +83,17 @@ export default{
 			},
 			payrollDetails: [],
 			image: '',
-			activeTabIndex: 0
+			activeTabIndex: 0,
+			employee_basic_information: [],
+			employee_educational_background: [],
+			employee_additional_information: [],
+			employee_position_details: [],
+			employee_payroll_details: [],
 		};
 	},
 	methods: {
 		onComplete: function(){
-			alert('Yay. Done!');
+
 		},
 		getBasic: function(e) {
 			[

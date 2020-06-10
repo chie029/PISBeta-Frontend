@@ -145,7 +145,14 @@
 
       }
     },
-    mounted(){
+    created() {
+      if (this.$store.state.api_host == 'charlie') {
+        this.$store.state.employee = 'http://localhost/PISBeta/Backend/Employee/api/'
+        this.$store.state.company = 'http://localhost/PISBeta/Backend/Company/api/'
+        this.$store.state.compensation = 'http://localhost/PISBeta/Backend/CompensationandDedution/api/'
+      }
+    },
+    mounted() {
       $(".sidebar-dropdown > a").click(function() {
         $(".sidebar-submenu").slideUp(200);
         if ($(this).parent().hasClass("active")) {
