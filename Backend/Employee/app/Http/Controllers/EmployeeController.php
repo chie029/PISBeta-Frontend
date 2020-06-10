@@ -51,11 +51,11 @@ class EmployeeController extends Controller
 
             $employee = Employee::create([
                 'employee_id' => $newid,
-                'employee_basic_information' => array($request['employee_basic_information']),
-                'employee_educational_background' => array($request['employee_educational_background']),
-                'employee_additional_information' => array($request['employee_additional_information']),
-                'employee_position' => array($request['employee_position']),
-                'employee_payroll_details' => array($request['employee_payroll_details']),
+                'employee_basic_information' => $request['employee_basic_information'],
+                'employee_educational_background' => $request['employee_educational_background'],
+                'employee_additional_information' => $request['employee_additional_information'],
+                'employee_position' => $request['employee_position'],
+                'employee_payroll_details' => $request['employee_payroll_details'],
             ]);
 
             return response()->json([
@@ -103,6 +103,11 @@ class EmployeeController extends Controller
                 'message' => 'Employee Successfully Updated!',
             ]);
         }
+    }
+
+    public function getNullUser()
+    {
+        return Employee::select(['employee_id','employee_basic_information'])->get();
     }
 
     public function assignCompensation(Request $request)

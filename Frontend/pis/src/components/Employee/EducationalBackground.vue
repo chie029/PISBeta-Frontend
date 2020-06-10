@@ -13,25 +13,25 @@
 								<input type="text" class="form-control my-3" placeholder="Institute Location" v-model="education.institute_location">
 								<div class="d-flex my-3">
 									<select class="form-control mr-1" v-model="education.graduation_month">
-										<option value="" disabled selected>Graduation Month</option>
-										<option value="1">1</option>
+										<option value="" disabled selected>-- Graduation Month --</option>
+										<option value="June">June</option>
 										<option value="2">2</option>
 										<option value="3">3</option>
 										<option value="4">4</option>
 									</select>
 									<select class="form-control ml-1" v-model="education.graduation_year">
-										<option value="" disabled selected>Graduation Year</option>
-										<option value="1">1</option>
+										<option value="" disabled selected>-- Graduation Year --</option>
+										<option value="2019">2019</option>
 										<option value="2">2</option>
 										<option value="3">3</option>
 										<option value="4">4</option>
 									</select>
 								</div>
 								<select class="form-control my-3" v-model="education.qualification">
-									<option value="" disabled selected>Qualification</option>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
+									<option value="" disabled selected>-- Select Qualification --</option>
+									<option value="Bachelor/s Degree">Bachelor/s Degree</option>
+									<option value="High School Diploma">High School Diploma</option>
+									<option value="Elementary Diploma">Elementary Diploma</option>
 									<option value="4">4</option>
 								</select>
 								<input type="text" class="form-control my-4" placeholder="Major" v-model="education.major">

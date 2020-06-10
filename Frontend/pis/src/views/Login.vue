@@ -26,7 +26,6 @@
                   <button type="submit" class="btn btn-warning text-white border-0 btn-block">
                     Login
                   </button>
-                  {{errors}}
                   <div class="float-right">
                     <a class="small text-white" href="" @click="forgotPassword()">Forgot Password?</a>
                   </div>
@@ -58,13 +57,12 @@ export default {
         password: this.password
         })
       .then(response => {
-        this.errors.push(response.data)
+        this.$router.push({name: 'Dashboard'})
         this.$session.start()
         this.$session.set('user', response.data.user)
         this.$session.set('image', response.data.user.image)
         this.$session.set('name', response.data.user.first_name + " " + response.data.user.middle_name + " " + response.data.user.last_name)
         this.$session.set('email', response.data.user.email)
-        this.$router.push({name: 'Dashboard'})
       })
       .catch(e => {
         this.errors.push(e)
