@@ -28,22 +28,11 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'employee_code' => 'required',
-            'first_name' => 'required', 
-            'middle_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required',
-            'mobile_no' => 'required',
-            'gender' => 'required',
-            'height' => 'required',
-            'weight' => 'required',
-            'religion' => 'required',
-            'marital_status' => 'required',
-            'citizenship' => 'required',
-            'birth_date' => 'required',
-            'birth_place' => 'required',
-            'present_address' => 'required',
-            'province_address' => 'required',
+            'employee_basic_information' => 'required',
+            'employee_educational_background' => 'required',
+            'employee_additional_information' => 'required',
+            'employee_position' => 'required',
+            'employee_payroll_details' => 'required',
         ]);
 
         if ($validator->fails())
@@ -62,25 +51,11 @@ class EmployeeController extends Controller
 
             $employee = Employee::create([
                 'employee_id' => $newid,
-                'employee_code' => $request['employee_code'],
-                'first_name' => $request['first_name'],
-                'middle_name' => $request['middle_name'],
-                'last_name' => $request['last_name'],
-                'suffix_name' => $request['suffix_name'],
-                'email' => $request['email'],
-                'personal_email' => $request['personal_email'],
-                'mobile_no' => $request['mobile_no'],
-                'gender' => $request['gender'],
-                'height' => $request['height'],
-                'weight' => $request['weight'],
-                'religion' => $request['religion'],
-                'marital_status' => $request['marital_status'],
-                'citizenship' => $request['citizenship'],
-                'birth_date' => $request['birth_date'],
-                'birth_place' => $request['birth_place'],
-                'present_address' => $request['present_address'],
-                'province_address' => $request['province_address'],
-                'image' => $request['image'],
+                'employee_basic_information' => array($request['employee_basic_information']),
+                'employee_educational_background' => array($request['employee_educational_background']),
+                'employee_additional_information' => array($request['employee_additional_information']),
+                'employee_position' => array($request['employee_position']),
+                'employee_payroll_details' => array($request['employee_payroll_details']),
             ]);
 
             return response()->json([
@@ -98,18 +73,14 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function updateBasicInfo(Request $request, Employee $employee)
+    public function update(Request $request, Employee $employee)
     {
-
         $validator = Validator::make($request->all(), [
-                'employee_code' => $request['employee_code'],
-                'first_name' => $request['first_name'],
-                'middle_name' => $request['middle_name'],
-                'last_name' => $request['last_name'],
-                'suffix_name' => $request['suffix_name'],
-                'email' => $request['email'],
-                'personal_email' => $request['personal_email'],
-                'mobile_no' => $request['mobile_no'],
+            'employee_basic_information' => 'required',
+            'employee_educational_background' => 'required',
+            'employee_additional_information' => 'required',
+            'employee_position' => 'required',
+            'employee_payroll_details' => 'required',
         ]);
 
         if ($validator->fails())
@@ -117,14 +88,11 @@ class EmployeeController extends Controller
             return response()->json(['status' => 'Failed','message' => $validator->errors()]);
         } else {
             $body = [
-                'employee_code' => $request['employee_code'],
-                'first_name' => $request['first_name'],
-                'middle_name' => $request['middle_name'],
-                'last_name' => $request['last_name'],
-                'suffix_name' => $request['suffix_name'],
-                'email' => $request['email'],
-                'personal_email' => $request['personal_email'],
-                'mobile_no' => $request['mobile_no'],
+                'employee_basic_information' => array($request['employee_basic_information']),
+                'employee_educational_background' => array($request['employee_educational_background']),
+                'employee_additional_information' => array($request['employee_additional_information']),
+                'employee_position' => array($request['employee_position']),
+                'employee_payroll_details' => array($request['employee_payroll_details']),
             ];
 
             $employee = Employee::where('employee_id', $request['employee_id'])->update($body);
@@ -137,117 +105,30 @@ class EmployeeController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Employee  $employee
-     * @return \Illuminate\Http\Response
-     */
-    public function updateAdditionalInfo(Request $request, Employee $employee)
+    public function assignCompensation(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
-            'gender' => 'required',
-            'height' => 'required',
-            'weight' => 'required',
-            'religion' => 'required',
-            'marital_status' => 'required',
-            'citizenship' => 'required',
-            'birth_date' => 'required',
-            'bitrth_place' => 'required',
-            'present_address' => 'required',
-            'province_address' => 'required',
+            'effective_date' => 'required',
         ]);
 
         if ($validator->fails())
         {
             return response()->json(['status' => 'Failed','message' => $validator->errors()]);
         } else {
+            $requestData = $request->all();
+            $requestData['employee_compensation']['effective_date'] = $request['effective_date'];
+            $employees = array($request['employees']);
+
             $body = [
-                'gender' => $request['gender'],
-                'height' => $request['height'],
-                'weight' => $request['weight'],
-                'religion' => $request['religion'],
-                'marital_status' => $request['marital_status'],
-                'citizenship' => $request['citizenship'],
-                'birth_date' => $request['birth_date'],
-                'bitrth_place' => $request['bitrth_place'],
-                'present_address' => $request['present_address'],
-                'province_address' => $request['province_address'],
+                'employee_compensation' => array($requestData['employee_compensation']),
             ];
 
-            $employee = Employee::where('employee_id', $request['employee_id'])->update($body);
+            $employee = Employee::whereIn('employee_id', $request['employees'])->update($body);
 
             return response()->json([
-                'employee' => Employee::where('employee_id', $request['employee_id'])->first(),
                 'status' => 'Success',
                 'message' => 'Employee Successfully Updated!',
             ]);
-        }
-    }
-
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Employee  $employee
-     * @return \Illuminate\Http\Response
-     */
-    public function createUser(Request $request, Employee $employee)
-    {
-
-        $validator = Validator::make($request->all(), [
-            'password' => 'required',
-            'role' => 'required',
-        ]);
-
-        if ($validator->fails())
-        {
-            return response()->json(['status' => 'Failed','message' => $validator->errors()]);
-        } else {
-            $body = [
-                'password' => Hash::make($request['password']),
-                'role' => $request['role'],
-                'has_account' => 1,
-            ];
-
-            $employee = Employee::where('employee_id', $request['employee_id'])->update($body);
-
-            return response()->json([
-                'employee' => Employee::where('employee_id', $request['employee_id'])->first(),
-                'status' => 'Success',
-                'message' => 'Employee Successfully Updated!',
-            ]);
-        }
-    }
-
-    public function login(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email'=>'required',
-            'password'=>'required',
-        ]);
-
-        if ($validator->fails()) {
-          return response()->json(['message' => $validator->messages()]);
-        } else {
-            $email = Employee::where('email', $request->email)->first();
-            if ($email) {
-                $user = Employee::where(['email' => $request->email, 'has_account' => 1])->first();
-                if($user) {
-                    if(password_verify($request->password, $user->password)) {
-                        return response()->json(['user' => $user, 'result'=>'Success', 'message' => 'Successfully Login!']);
-                    } else {
-                        return response()->json(['result'=>'Failed', 'message' => 'Invalid Password!']);
-                    }
-                } else {
-                    return response()->json(['result'=>'Failed', 'message' => 'User not registered!']);
-                }
-            } else {
-                return response()->json(['result'=>'Failed', 'message' => 'Invalid Email!']);
-            } 
         }
     }
 }

@@ -4,8 +4,8 @@ namespace App;
 
 use Jenssegers\Mongodb\Eloquent\Model as Eloquent;
 
-class Compensation extends Eloquent
+class Deduction extends Eloquent
 {
 	protected $connection = 'mongodb';
-	protected $collection = 'compensation';
+	protected $collection = 'deduction';
 }
