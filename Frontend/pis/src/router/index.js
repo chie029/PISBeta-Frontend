@@ -15,6 +15,9 @@ import CreateEmployee from '../views/Employee/CreateEmployee.vue'
 // User
 import CreateUser from '../views/User/CreateUser.vue'
 
+// User
+import Company from '../views/Company/Company.vue'
+
 Vue.use(VueRouter)
 
   const routes = [
@@ -47,6 +50,11 @@ Vue.use(VueRouter)
     path: '/CreateUser',
     name: 'CreateUser',
     component: CreateUser
+  },
+  {
+    path: '/Company',
+    name: 'Company',
+    component: Company
   },
 ]
 

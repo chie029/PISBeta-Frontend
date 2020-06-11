@@ -6,13 +6,7 @@
 		<div>
 			<input type="text" class="form-control mb-3" placeholder="Employee Code" v-model="basicInformation.employeeCode">
 			<div class="d-flex p-0 my-3">
-				<select class="form-control mr-1" v-model="basicInformation.suffixName">
-					<option value="" disabled selected>Suffix Name</option>
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
-				</select>
+				<input type="text" class="form-control mr-1" placeholder="Suffix Name" v-model="basicInformation.suffixName">
 				<input type="text" class="form-control mx-1" placeholder="First Name" v-model="basicInformation.firstName">
 				<input type="text" class="form-control mx-1" placeholder="Middle Name" v-model="basicInformation.middleName">
 				<input type="text" class="form-control ml-1" placeholder="Last Name" v-model="basicInformation.lastName">

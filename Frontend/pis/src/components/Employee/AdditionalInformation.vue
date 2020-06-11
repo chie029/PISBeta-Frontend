@@ -7,7 +7,7 @@
 			<input type="text" class="form-control my-3" placeholder="Religion" v-model="additionalInformation.religion">
 			<input type="text" class="form-control my-3" placeholder="Marital Status" v-model="additionalInformation.marital_status">
 			<select class="form-control my-3" v-model="additionalInformation.gender">
-				<option value="" disabled selected>Select Gender</option>
+				<option value="" disabled selected>-- Select Gender --</option>
 				<option value="Male">Male</option>
 				<option value="Female">Female</option>
 			</select>

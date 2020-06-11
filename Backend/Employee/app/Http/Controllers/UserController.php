@@ -19,21 +19,14 @@ class UserController extends Controller
      */
     public function createUser(Request $request, Employee $employee)
     {
-
-        $validator = Validator::make($request->all(), [
-            'employee_user_information' => 'required',
-        ]);
-
-        if ($validator->fails())
-        {
-            return response()->json(['status' => 'Failed','message' => $validator->errors()]);
-        } else {
-
-            $requestData = $request->all();
-            $requestData['employee_user_information']['password'] = Hash::make($request['password']);
+            $employee_user_information = [
+                'role' => $request['role'],
+                'password' => Hash::make($request['password']),
+                'has_account' => 1,
+            ];
 
             $body = [
-                'employee_user_information' => $requestData['employee_user_information'],
+                'employee_user_information' => $employee_user_information,
             ];
 
             $employee = Employee::where('employee_id', $request['employee_id'])->update($body);
@@ -43,7 +36,6 @@ class UserController extends Controller
                 'status' => 'Success',
                 'message' => 'Employee Successfully Updated!',
             ]);
-        }
     }
 
     public function login(Request $request)

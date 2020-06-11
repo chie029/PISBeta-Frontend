@@ -30,6 +30,7 @@ Route::post('/project/update', 'ProjectController@update');
 Route::get('/employee', 'EmployeeController@index');
 Route::post('/employee/store', 'EmployeeController@store');
 Route::post('/employee/update', 'EmployeeController@update');
+Route::get('/employee/user', 'EmployeeController@getNullUser');
 Route::post('/employee/assignCompensation', 'EmployeeController@assignCompensation');
 
 Route::post('/user/createUser', 'UserController@createUser');

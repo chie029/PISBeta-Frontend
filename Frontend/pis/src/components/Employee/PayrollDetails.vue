@@ -5,15 +5,15 @@
 		</h5>
 		<div>
 			<select class="form-control mb-3" v-model="payrollDetails.employment_status">
-				<option value="" selected disabled>Select Employement Status</option>
-				<option v-for="(status, index) in payrollDetails.status" v-bind:value="status.value" v-bind:key="index">
+				<option value="" selected disabled>-- Select Employement Status --</option>
+				<option v-for="(status, index) in status" v-bind:value="status.value" v-bind:key="index">
 				{{ status.text }}
 				</option>
 			</select>
 			<input type="date" class="form-control my-3" placeholder="Date Hired" v-model="payrollDetails.date_hired">
 			<select class="form-control mb-3" v-model="payrollDetails.employment_type">
-				<option value="" selected disabled>Select Employment Type</option>
-				<option v-for="(type, index) in payrollDetails.employment_types" v-bind:value="type.value" v-bind:key="index">
+				<option value="" selected disabled>-- Select Employment Type --</option>
+				<option v-for="(type, index) in employment_types" v-bind:value="type.value" v-bind:key="index">
 				{{ type.text }}
 				</option>
 			</select>
@@ -21,20 +21,20 @@
 			<input type="date" class="form-control my-3" placeholder="End Date" v-model="payrollDetails.end_date">
 			<input type="text" class="form-control my-3" placeholder="Basic Salary" v-model="payrollDetails.basic_salary">
 			<select class="form-control my-3" v-model="payrollDetails.wage_type">
-				<option value="" selected disabled>Select Wage Type</option>
-				<option v-for="(type, index) in payrollDetails.wage_types" v-bind:value="type.value" v-bind:key="index">
+				<option value="" selected disabled>-- Select Wage Type --</option>
+				<option v-for="(type, index) in wage_types" v-bind:value="type.value" v-bind:key="index">
 				{{ type.text }}
 				</option>
 			</select>
 			<select class="form-control my-3" v-model="payrollDetails.payout_type">
-				<option value="" selected disabled>Select Wage Type</option>
-				<option v-for="(type, index) in payrollDetails.payout_types" v-bind:value="type.value" v-bind:key="index">
+				<option value="" selected disabled>-- Select Wage Type --</option>
+				<option v-for="(type, index) in payout_types" v-bind:value="type.value" v-bind:key="index">
 				{{ type.text }}
 				</option>
 			</select>
 			<select class="form-control my-3" v-model="payrollDetails.tax_computation">
-				<option value="" selected disabled>Select Wage Type</option>
-				<option v-for="(tax, index) in payrollDetails.tax_computations" v-bind:value="tax.value" v-bind:key="index">
+				<option value="" selected disabled>-- Select Wage Type --</option>
+				<option v-for="(tax, index) in tax_computations" v-bind:value="tax.value" v-bind:key="index">
 				{{ tax.text }}
 				</option>
 			</select>
@@ -45,8 +45,8 @@
 				<input type="text" class="form-control" placeholder="HDMF Number" v-model="payrollDetails.pagibig_number">
 			</div>
 			<select class="form-control my-3" v-model="payrollDetails.payroll_group">
-				<option value="" selected disabled>Select Wage Type</option>
-				<option v-for="(group, index) in payrollDetails.payroll_groups" v-bind:value="group.value" v-bind:key="index">
+				<option value="" selected disabled>-- Select Wage Type --</option>
+				<option v-for="(group, index) in payroll_groups" v-bind:value="group.value" v-bind:key="index">
 				{{ group.text }}
 				</option>
 			</select>
@@ -82,30 +82,30 @@
 				} ,
 				payrollDetails: { 
 					employment_status: '',
-					status: [],
 					date_hired: '',
 					employment_type: '',
-					employment_types: [],
 					effective_date: '',
 					end_date: '',
 					basic_salary: '',
 					wage_type: '',
-					wage_types: [],
 					payout_type: '',
-					payout_types: [],
 					tax_computation: '',
-					tax_computations: [],
 					tin_number: '',
 					sss_number: '',
 					philhealth_number: '',
 					pagibig_number: '',
 					payroll_group: '',
-					payroll_groups: [],
 				},
+				employment_types: [],
+				status: [],
+				payroll_groups: [],
+				wage_types: [],
+				payout_types: [],
+				tax_computations: [],
 			}
 		},	
 		watch: {
-			positionDetails: {
+			payrollDetails: {
 				handler: function() {
 					this.$emit('newdata', this.payrollDetails);
 				},

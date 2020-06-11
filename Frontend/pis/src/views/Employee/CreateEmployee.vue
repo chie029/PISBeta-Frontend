@@ -75,25 +75,36 @@ export default{
 				province_address: '',
 			},
 			positionDetails: { 
-				company: '', 
-				department: '',
-				report_to: '',
+				selected_company: '',
+				selected_department: '',
+				selected_report_to: '',
 				position: '',
-				projects: [],
+				selected_project: '',
 			},
 			payrollDetails: [],
 			image: '',
 			activeTabIndex: 0,
-			employee_basic_information: [],
-			employee_educational_background: [],
-			employee_additional_information: [],
-			employee_position_details: [],
-			employee_payroll_details: [],
+			responses: [],
 		};
 	},
 	methods: {
 		onComplete: function(){
-
+			this.axios.post(this.$store.state.employee + 'employee/store', {
+			employee_basic_information: this.basicInformation,
+			employee_educational_background: this.educationalBackground,
+			employee_additional_information: this.additionalInformation,
+			employee_position: this.positionDetails,
+			employee_payroll_details: this.payrollDetails,
+			})
+			.then(response => {
+				if (response.data.status == 'Success') {
+					this.$router.push({name: 'CreateEmployee'});
+				}
+			})
+			.catch(e => {
+				this.errors.push(e)
+				alert('error');
+			})
 		},
 		getBasic: function(e) {
 			[
@@ -124,11 +135,11 @@ export default{
 		},
 		getPosition: function(e) {
 			[
-				this.positionDetails.company, 
-				this.positionDetails.department, 
-				this.positionDetails.report_to, 
+				this.positionDetails.selected_company, 
+				this.positionDetails.selected_department, 
+				this.positionDetails.selected_report_to, 
 				this.positionDetails.position, 
-				this.positionDetails.projects, 
+				this.positionDetails.selected_project, 
 			] = e;
 		},
 		getPayroll: function(e) {

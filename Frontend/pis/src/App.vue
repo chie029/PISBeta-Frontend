@@ -40,7 +40,7 @@
                 </a>
               </li>
               <li class="sidebar-dropdown">
-                <a href="">
+                <a href="" @click="()=>{this.$router.push({name: 'Company'})}">
                   <i class="fa fa-building"></i>
                   <span>Company</span>
                   <span class="badge badge-pill badge-warning">New</span>
@@ -443,7 +443,7 @@ img {
 }
 
 .t-light-gray {
-    color: lightgray;
+    color: lightgray !important;
 }
 
 .b-primary {
