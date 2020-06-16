@@ -50,7 +50,7 @@ class UserController extends Controller
         } else {
             $email = Employee::where('employee_basic_information.email', $request->email)->first();
             if ($email) {
-                $user = Employee::where(['employee_basic_information.email' => $request->email, 'employee_user_information.has_account' => '1'])->first();
+                $user = Employee::where(['employee_basic_information.email' => $request->email, 'employee_user_information.has_account' => 1])->first();
                 if($user) {
                     if(password_verify($request->password, $user->employee_user_information['password'])) {
                         return response()->json(['user' => $user, 'result'=>'Success', 'message' => 'Successfully Login!']);

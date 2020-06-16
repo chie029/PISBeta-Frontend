@@ -57,12 +57,16 @@ export default {
         password: this.password
         })
       .then(response => {
-        this.$router.push({name: 'Dashboard'})
-        this.$session.start()
-        this.$session.set('user', response.data.user)
-        this.$session.set('image', response.data.user.image)
-        this.$session.set('name', response.data.user.first_name + " " + response.data.user.middle_name + " " + response.data.user.last_name)
-        this.$session.set('email', response.data.user.email)
+        if (response.data.result == "Success") {
+          this.$router.push({name: 'Dashboard'})
+          this.$session.start()
+          this.$session.set('user', response.data.user)
+          this.$session.set('image', response.data.user.image)
+          this.$session.set('name', response.data.user.first_name + " " + response.data.user.middle_name + " " + response.data.user.last_name)
+          this.$session.set('email', response.data.user.email)
+        } else {
+          alert(response.data.message);
+        }
       })
       .catch(e => {
         this.errors.push(e)
