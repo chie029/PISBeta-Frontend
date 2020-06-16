@@ -90,11 +90,11 @@ export default{
 	methods: {
 		onComplete: function(){
 			this.axios.post(this.$store.state.employee + 'employee/store', {
-			employee_basic_information: this.basicInformation,
-			employee_educational_background: this.educationalBackground,
-			employee_additional_information: this.additionalInformation,
-			employee_position: this.positionDetails,
-			employee_payroll_details: this.payrollDetails,
+				employee_basic_information: this.basicInformation,
+				employee_educational_background: this.educationalBackground,
+				employee_additional_information: this.additionalInformation,
+				employee_position: this.positionDetails,
+				employee_payroll_details: this.payrollDetails,
 			})
 			.then(response => {
 				if (response.data.status == 'Success') {

@@ -9,10 +9,28 @@ use Illuminate\Support\Facades\Validator;
 class CompanyController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        return Company::all();
+        $company_model = new Company();
+        $company = [];
+        $error = [];
+
+        $rows = $request->get('show') ? (int)$request->get('show') : 10;
+
+        // Search
+        if($request->has('search')) $company = $company_model->search($request->get('search'));
+
+        // Sorting
+        if(!empty($request->get('sort_in')) && !empty($request->get('sort_by')))  $company = $company_model->sorting($request->sort_in, $request->sort_by);
+
+        // Paginate
+        if ($company == null) $company = $company_model;
+        $company = $company->paginate($rows);
+
+        return apiReturn($company, 'Success', 'success');
     }
+
+
 
     public function store(Request $request)
     {
@@ -55,6 +73,8 @@ class CompanyController extends Controller
             ]);
         }
     }
+
+
 
     public function update(Request $request, Company $company)
     {

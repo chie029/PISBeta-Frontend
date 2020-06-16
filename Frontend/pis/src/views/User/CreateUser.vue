@@ -147,14 +147,14 @@ export default {
 			})
 		}
 	},
-	mounted() {
+	created() {
 		this.axios.get(this.$store.state.employee + 'employee/user')
 		.then(response => {
-			for (var i = response.data.length - 1; i >= 0; i--) {
-				var name = response.data[i].employee_basic_information.first_name + ' ' + response.data[i].employee_basic_information.middle_name + ' ' + response.data[i].employee_basic_information.last_name + ' ' + '(' + response.data[i].employee_basic_information.employee_code + ')'
-				var code = response.data[i].employee_id
+			for (var i = response.data.message.length - 1; i >= 0; i--) {
+				var name = response.data.message[i].employee_basic_information.first_name + ' ' + response.data.message[i].employee_basic_information.middle_name + ' ' + response.data.message[i].employee_basic_information.last_name + ' ' + '(' + response.data.message[i].employee_basic_information.employee_code + ')'
+				var code = response.data.message[i].employee_id
 				this.employees.push({ text: name, value: code, });
-				this.email = response.data[i].employee_basic_information.email
+				this.email = response.data.message[i].employee_basic_information.email
 			}
 		})
 		.catch(e => {

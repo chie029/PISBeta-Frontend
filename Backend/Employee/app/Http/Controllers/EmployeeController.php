@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Hash;
 use App\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 
 class EmployeeController extends Controller
@@ -107,7 +108,12 @@ class EmployeeController extends Controller
 
     public function getNullUser()
     {
-        return Employee::select(['employee_id','employee_basic_information'])->get();
+        $has_account = Employee::where('employee_user_information', 'exists', false)->get();;
+        if($has_account){
+            return response()->json(['status'=>'result', 'message'=>$has_account]);
+        }
+        return response()->json(['status'=>'none', 'message'=>'No Data!']);
+
     }
 
     public function assignCompensation(Request $request)

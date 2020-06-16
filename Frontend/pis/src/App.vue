@@ -39,21 +39,12 @@
                   <span>Dashboard</span>
                 </a>
               </li>
-              <li class="sidebar-dropdown">
+              <li >
                 <a href="" @click="()=>{this.$router.push({name: 'Company'})}">
                   <i class="fa fa-building"></i>
                   <span>Company</span>
                   <span class="badge badge-pill badge-warning">New</span>
                 </a>
-                <div class="sidebar-submenu">
-                  <ul>
-                    <li>
-                      <a href="#">Dashboard 1
-                        <span class="badge badge-pill badge-success">Pro</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
               </li>
               <li>
                 <a href="#">
