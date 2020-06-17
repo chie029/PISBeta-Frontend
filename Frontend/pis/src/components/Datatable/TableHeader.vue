@@ -13,8 +13,7 @@
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="#">Import</a>
 						<a class="dropdown-item" href="#">Export</a>
-						<a class="dropdown-item" href="#">Delete</a>
-						<a class="dropdown-item" href="#">Update</a>
+						<a class="dropdown-item" href="#">Archived</a>
 					</div>
 				</div>
 				<button class="btn btn-success btn-sm align-self-start mx-1 px-3"><i class="fa fa-plus-circle" aria-hidden="true"></i> Create</button>
