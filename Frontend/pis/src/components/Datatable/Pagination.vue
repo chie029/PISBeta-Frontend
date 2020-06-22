@@ -88,7 +88,8 @@ export default{
 	}
 
 	#paginate_button span .btn_paginate.active {
-		border-top: 2px solid black;
+		border-top: 2px solid #4E73DF;
+		color: #4E73DF;
 	}
 
 	#page_info span {
