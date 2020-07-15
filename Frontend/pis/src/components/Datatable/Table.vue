@@ -9,12 +9,12 @@
 			<table id="table" class="table borderless m-0 p-0">
 				<thead>
 					<tr>
-						<th style="width: 5%"><input type="checkbox" v-model="allSelected" @click="selectAll"></th>
-						<th style="width: 20%" v-for="col in columns" v-bind:key="col">{{ col | capitalize }}</th>
+						<th style="width: 10px"><input type="checkbox" v-model="allSelected" @click="selectAll"></th>
+						<th style="width: 20px" v-for="col in columns" v-bind:key="col">{{ col | capitalize }}</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="(row, index) in rows" v-bind:key="index">
+					<tr class="pointer" v-for="(row, index) in rows" v-bind:key="index" @click="show(cid[index]['id'], page)">
 						<td class="align-middle"><input type="checkbox" @click="select" v-model="itemid" :value="cid[index]['id']"></td>
 						<td class="align-middle" v-for="col in columns" v-bind:key="col">{{ row[col] }}</td>
 					</tr>
@@ -37,6 +37,7 @@ export default {
 	props: {
 		rows: [],
 		cid: [],
+		page: [],
 	},
 	computed: {
 		"columns": function columns() {
@@ -71,6 +72,9 @@ export default {
         },
         select: function() {
             this.allSelected = false;
+        },
+        show(id, page) {
+			this.$router.push({name: page, params: {id: id}});
         }
 	},
 	watch: {

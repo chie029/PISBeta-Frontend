@@ -41,18 +41,18 @@ class DeductionController extends Controller
         {
             return response()->json(['status' => 'Failed', 'message' => $validator->errors()]);
         } else {
-            $deductionid = Deduction::select('deduction_id')->orderBy('deduction_id', 'desc')->first();
+            $deduction_id = Deduction::select('deduction_id')->orderBy('deduction_id', 'desc')->first();
 
-            if ($deductionid == null) {
-                $newid = "DDT_0001";
+            if ($deduction_id == null) {
+                $new_id = "DDT_0001";
             } else {
-                $count = explode('_', $deductionid['deduction_id']);
-                $addcount = $count[1] + 1;
-                if ($addcount < 10) { $newid = "DDT_" . "000" . $addcount; } else { $newid = "DDT_" . "00" . $addcount;}
+                $count = explode('_', $deduction_id['deduction_id']);
+                $add_count = $count[1] + 1;
+                if ($add_count < 10) { $new_id = "DDT_" . "000" . $add_count; } else { $new_id = "DDT_" . "00" . $add_count;}
             };
 
             $deduction = Deduction::insert([
-                'deduction_id' => $newid,
+                'deduction_id' => $new_id,
                 'name' => $request['name'],
                 'amount' => $request['amount'],
                 'taxable' => $request['taxable'], 
@@ -65,7 +65,7 @@ class DeductionController extends Controller
             ]);
 
             return response()->json([
-                'deduction' => Deduction::where('deduction_id', $newid)->first(),
+                'deduction' => Deduction::where('deduction_id', $new_id)->first(),
                 'status' => 'Success',
                 'message' => 'Deduction Successfully Created',
             ]);

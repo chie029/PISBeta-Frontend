@@ -105,6 +105,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 export default {
 	name: 'CreateUser',
 	data(){
@@ -133,7 +134,7 @@ export default {
 	methods: {
 		submit() {
 			this.role = {app: this.app,modules: this.modules};
-			this.axios.post(this.$store.state.employee + 'user/createUser', {
+			this.axios.post(this.$store.state.employee + 'user/create-account?token=' + this.$session.get('token'), {
 				role: this.role,
 				password: this.password,
 				employee_id: this.employee
@@ -148,8 +149,18 @@ export default {
 		}
 	},
 	created() {
-		this.axios.get(this.$store.state.employee + 'employee/user')
+		this.axios.get(this.$store.state.employee + 'employee/no-account?token=' + this.$session.get('token'))
 		.then(response => {
+			if (response.data.status == 'failed') {
+				Swal.fire({
+					icon: 'error',
+					title: response.data.result,
+					showConfirmButton: false,
+					timer: 4000,
+					onClose: this.$router.push({name: 'Login'})
+				})
+			}
+
 			for (var i = response.data.message.length - 1; i >= 0; i--) {
 				var name = response.data.message[i].employee_basic_information.first_name + ' ' + response.data.message[i].employee_basic_information.middle_name + ' ' + response.data.message[i].employee_basic_information.last_name + ' ' + '(' + response.data.message[i].employee_basic_information.employee_code + ')'
 				var code = response.data.message[i].employee_id
@@ -158,8 +169,14 @@ export default {
 			}
 		})
 		.catch(e => {
-			this.errors.push(e)
-			alert('error');
+			console.log(e);
+			Swal.fire({
+				icon: 'info',
+				title: 'Check your Connection!',
+				showConfirmButton: false,
+				timer: 4000,
+				onClose: this.$router.push({name: 'Login'})
+			})
 		})
 	}
 };

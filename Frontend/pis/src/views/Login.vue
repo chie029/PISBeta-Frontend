@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 export default {
   name: 'Login',
   data() {
@@ -57,20 +58,33 @@ export default {
         password: this.password
         })
       .then(response => {
-        if (response.data.result == "Success") {
-          this.$router.push({name: 'Dashboard'})
+        if (response.data.status == "success") {
           this.$session.start()
-          this.$session.set('user', response.data.user)
-          this.$session.set('image', response.data.user.image)
-          this.$session.set('name', response.data.user.first_name + " " + response.data.user.middle_name + " " + response.data.user.last_name)
-          this.$session.set('email', response.data.user.email)
+          this.$session.set('user', response.data.result.user)
+          this.$session.set('token', response.data.result.token)
+          // this.$session.set('image', response.data.user.image)
+          this.$session.set('name', response.data.result.user.basic_information.first_name + " " + response.data.result.user.basic_information.middle_name + " " + response.data.result.user.basic_information.last_name)
+          this.$session.set('email', response.data.result.user.email)
+          this.$router.push({name: 'Dashboard'});
         } else {
-          alert(response.data.message);
+          Swal.fire({
+            icon: 'error',
+            title: response.data.result,
+            showConfirmButton: false,
+            timer: 1500,
+            onClose: this.$router.push({name: 'Login'})
+          })
         }
       })
       .catch(e => {
-        this.errors.push(e)
-        alert('error');
+        console.log(e);
+        Swal.fire({
+          icon: 'info',
+          title: e,
+          showConfirmButton: false,
+          timer: 2000,
+          onClose: this.$router.push({name: 'Login'})
+        })
       })
     },
     forgotPassword(){

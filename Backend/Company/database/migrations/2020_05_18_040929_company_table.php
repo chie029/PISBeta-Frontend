@@ -14,13 +14,14 @@ class CompanyTable extends Migration
     public function up()
     {
         Schema::create('company', function (Blueprint $table) {
-            $table->string('company_id')->unique();
-            $table->string('company_name');
-            $table->string('company_code');
-            $table->string('company_contact');
-            $table->string('company_address');
-            $table->boolean('company_archived');
-            $table->rememberToken();
+            $table->string('id')->unique();
+            $table->string('name');
+            $table->string('code');
+            $table->string('contact');
+            $table->string('address');
+            $table->boolean('isArchived')->default(0);
+            $table->object('created_by');
+            $table->object('updated_by');
             $table->timestamps();
         });
     }

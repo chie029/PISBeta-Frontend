@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 export default {
   name: 'ForgotPassword',
   data() {
@@ -39,7 +40,6 @@ export default {
   },
   created: function(){
     if (!this.$session.exist()) {
-      alert('wo');
       this.$router.push({name: 'ForgotPassword'})
     }
   },
@@ -83,8 +83,14 @@ export default {
         }
       })
       .catch(e => {
-        this.error.push(e)
-        alert('error');
+        console.log(e);
+        Swal.fire({
+          icon: 'info',
+          title: e,
+          showConfirmButton: false,
+          timer: 2000,
+          onClose: this.$router.push({name: 'Login'})
+        })
       })
     },
     login()

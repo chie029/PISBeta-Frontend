@@ -10,7 +10,7 @@ class Company extends Eloquent
 	protected $collection = 'company';
 
     protected $fillable = [
-        'company_id', 'company_name','company_code', 'company_contact','company_address','company_archived'
+        'id', 'name','code', 'contact','address','isArchived','created_by','updated_by'
     ];
 
 	// Sorting
@@ -19,7 +19,7 @@ class Company extends Eloquent
 		$sort_in = trim ($sort_in);
 		$sort_by = trim ($sort_by);
 
-		$sort_in_only = ['company_name', 'company_code'];
+		$sort_in_only = ['name', 'code'];
 		if (!in_array($sort_in, $sort_in_only)) return $query;
 
 		$r = $query->orderBy($sort_in, $sort_by);
@@ -30,11 +30,11 @@ class Company extends Eloquent
 	public function scopeSearch ($query, $string)
 	{
 		$string = trim ($string);
-		$r = $query->where('company_id','like','%'.$string.'%')
-		->orWhere('company_code', 'like', '%'.$string.'%')
-		->orWhere('company_contact', 'like', '%'.$string.'%')
-		->orWhere('employee_code', 'like', '%'.$string.'%')
-		->orWhere('company_address', 'like', '%'.$string.'%');
+		$r = $query->where('id','like','%'.$string.'%')
+		->orWhere('code', 'like', '%'.$string.'%')
+		->orWhere('contact', 'like', '%'.$string.'%')
+		// ->orWhere('employee_code', 'like', '%'.$string.'%')
+		->orWhere('address', 'like', '%'.$string.'%');
 		return $r;
 	}
 }

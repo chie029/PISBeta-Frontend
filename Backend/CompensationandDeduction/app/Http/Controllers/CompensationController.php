@@ -46,18 +46,18 @@ class CompensationController extends Controller
         {
             return response()->json(['status' => 'Failed', 'message' => $validator->errors()]);
         } else {
-            $compensationid = Compensation::select('compensation_id')->orderBy('compensation_id', 'desc')->first();
+            $compensation_id = Compensation::select('compensation_id')->orderBy('compensation_id', 'desc')->first();
 
-            if ($compensationid == null) {
-                $newid = "CMP_0001";
+            if ($compensation_id == null) {
+                $new_id = "CMP_0001";
             } else {
-                $count = explode('_', $compensationid['compensation_id']);
-                $addcount = $count[1] + 1;
-                if ($addcount < 10) { $newid = "CMP_" . "000" . $addcount; } else { $newid = "CMP_" . "00" . $addcount;}
+                $count = explode('_', $compensation_id['compensation_id']);
+                $add_count = $count[1] + 1;
+                if ($add_count < 10) { $new_id = "CMP_" . "000" . $add_count; } else { $new_id = "CMP_" . "00" . $add_count;}
             };
 
             $compensation = Compensation::insert([
-                'compensation_id' => $newid,
+                'compensation_id' => $new_id,
                 'name' => $request['name'],
                 'amount' => $request['amount'],
                 'taxable' => $request['taxable'], 
@@ -73,7 +73,7 @@ class CompensationController extends Controller
             ]);
 
             return response()->json([
-                'compensation' => Compensation::where('compensation_id', $newid)->first(),
+                'compensation' => Compensation::where('compensation_id', $new_id)->first(),
                 'status' => 'Success',
                 'message' => 'Compensation Successfully Created',
             ]);

@@ -15,9 +15,37 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Employee::All();
+        $employee_model = new Employee();
+        $employee = [];
+        $error = [];
+
+        $rows = $request->get('show') ? (int)$request->get('show') : 10;
+
+        // Search
+        if($request->has('search')) $employee = $employee_model->search($request->get('search'));
+
+        // Sorting
+        if(!empty($request->get('sort_in')) && !empty($request->get('sort_by')))  $employee = $employee_model->sorting($request->sort_in, $request->sort_by);
+
+        // Paginate
+        if ($employee == null) $employee = $employee_model;
+        $employee = $employee->paginate($rows);
+
+
+        return response()->json([
+            'employee' => $employee,
+            'status' => 'Success',
+        ]);
+    }
+
+    public function show(Request $request)
+    {
+        return response()->json([
+            'employee' => Employee::where('id', $request->id)->first(),
+            'status' => 'Success',
+        ]);
     }
 
     /**
@@ -29,42 +57,52 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'employee_basic_information' => 'required',
-            'employee_educational_background' => 'required',
-            'employee_additional_information' => 'required',
-            'employee_position' => 'required',
-            'employee_payroll_details' => 'required',
+            'email' => 'required',
+            'basic_information' => 'required',
+            'educational_background' => 'required',
+            'additional_information' => 'required',
+            'position' => 'required',
+            'payroll_details' => 'required',
         ]);
 
         if ($validator->fails())
         {
             return response()->json(['status' => 'Failed', 'message' => $validator->errors()]);
         } else {
-            $employeeid = Employee::select('employee_id')->orderBy('employee_id', 'desc')->first();
+            $employee_id = Employee::select('id')->orderBy('id', 'desc')->first();
 
-            if ($employeeid == null) {
-                $newid = "EMP_0001";
+            if ($employee_id == null) {
+                $new_id = "EMP_0001";
             } else {
-                $count = explode('_', $employeeid['employee_id']);
-                $addcount = $count[1] + 1;
-                if ($addcount < 10) { $newid = "EMP_" . "000" . $addcount; } else { $newid = "EMP_" . "00" . $addcount;}
+                $count = explode('_', $employee_id['id']);
+                $add_count = $count[1] + 1;
+                if ($add_count < 10) { $new_id = "EMP_" . "000" . $add_count; } else { $new_id = "EMP_" . "00" . $add_count;}
             };
 
             $employee = Employee::create([
-                'employee_id' => $newid,
-                'employee_basic_information' => $request['employee_basic_information'],
-                'employee_educational_background' => $request['employee_educational_background'],
-                'employee_additional_information' => $request['employee_additional_information'],
-                'employee_position' => $request['employee_position'],
-                'employee_payroll_details' => $request['employee_payroll_details'],
+                'id' => $new_id,
+                'email' => $request['email'],
+                'basic_information' => $request['basic_information'],
+                'educational_background' => $request['educational_background'],
+                'additional_information' => $request['additional_information'],
+                'position' => $request['position'],
+                'payroll_details' => $request['payroll_details'],
             ]);
 
             return response()->json([
-                'employee' => Employee::where('employee_id', $employee->employee_id)->first(),
+                'employee' => Employee::where('id', $employee->id)->first(),
                 'status' => 'Success',
                 'message' => 'Employee Successfully Created',
             ]);
         }
+    }
+
+    public function edit(Request $request)
+    {
+        return response()->json([
+            'employee' => Employee::where('id', $request->id)->first(),
+            'status' => 'Success',
+        ]);
     }
 
     /**
@@ -77,11 +115,11 @@ class EmployeeController extends Controller
     public function update(Request $request, Employee $employee)
     {
         $validator = Validator::make($request->all(), [
-            'employee_basic_information' => 'required',
-            'employee_educational_background' => 'required',
-            'employee_additional_information' => 'required',
-            'employee_position' => 'required',
-            'employee_payroll_details' => 'required',
+            'basic_information' => 'required',
+            'educational_background' => 'required',
+            'additional_information' => 'required',
+            'position' => 'required',
+            'payroll_details' => 'required',
         ]);
 
         if ($validator->fails())
@@ -89,17 +127,17 @@ class EmployeeController extends Controller
             return response()->json(['status' => 'Failed','message' => $validator->errors()]);
         } else {
             $body = [
-                'employee_basic_information' => array($request['employee_basic_information']),
-                'employee_educational_background' => array($request['employee_educational_background']),
-                'employee_additional_information' => array($request['employee_additional_information']),
-                'employee_position' => array($request['employee_position']),
-                'employee_payroll_details' => array($request['employee_payroll_details']),
+                'basic_information' => array($request['basic_information']),
+                'educational_background' => array($request['educational_background']),
+                'additional_information' => array($request['additional_information']),
+                'position' => array($request['position']),
+                'payroll_details' => array($request['payroll_details']),
             ];
 
-            $employee = Employee::where('employee_id', $request['employee_id'])->update($body);
+            $employee = Employee::where('id', $request['id'])->update($body);
 
             return response()->json([
-                'employee' => Employee::where('employee_id', $request['employee_id'])->first(),
+                'employee' => Employee::where('id', $request['id'])->first(),
                 'status' => 'Success',
                 'message' => 'Employee Successfully Updated!',
             ]);
@@ -108,12 +146,11 @@ class EmployeeController extends Controller
 
     public function getNullUser()
     {
-        $has_account = Employee::where('employee_user_information', 'exists', false)->get();;
+        $has_account = Employee::where('user_information', 'exists', false)->get();;
         if($has_account){
             return response()->json(['status'=>'result', 'message'=>$has_account]);
         }
         return response()->json(['status'=>'none', 'message'=>'No Data!']);
-
     }
 
     public function assignCompensation(Request $request)
@@ -126,15 +163,14 @@ class EmployeeController extends Controller
         {
             return response()->json(['status' => 'Failed','message' => $validator->errors()]);
         } else {
-            $requestData = $request->all();
-            $requestData['employee_compensation']['effective_date'] = $request['effective_date'];
-            $employees = array($request['employees']);
+            $request_data = $request->all();
+            $request_data['compensation']['effective_date'] = $request['effective_date'];
 
             $body = [
-                'employee_compensation' => array($requestData['employee_compensation']),
+                'compensation' => array($request_data['compensation']),
             ];
 
-            $employee = Employee::whereIn('employee_id', $request['employees'])->update($body);
+            $employee = Employee::whereIn('id', $request['employees'])->update($body);
 
             return response()->json([
                 'status' => 'Success',

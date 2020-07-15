@@ -33,74 +33,73 @@
           <!-- sidebar-header  -->
           <div class="sidebar-menu">
             <ul>
-              <li>
+              <li :class="{ active: currentPage == '/Dashboard' }">
                 <a href="" @click="()=>{this.$router.push({name: 'Dashboard'})}">
                   <i class="fa fa-tachometer-alt"></i>
                   <span>Dashboard</span>
                 </a>
               </li>
-              <li >
+              <li :class="{ active: currentPage == '/Company' }">
                 <a href="" @click="()=>{this.$router.push({name: 'Company'})}">
                   <i class="fa fa-building"></i>
                   <span>Company</span>
-                  <span class="badge badge-pill badge-warning">New</span>
                 </a>
               </li>
-              <li>
+              <li :class="{ active: currentPage == '/Department' }">
                 <a href="#">
                   <i class="fa fa-university"></i>
                   <span>Department</span>
                 </a>
               </li>
-              <li>
+              <li :class="{ active: currentPage == '/Project' }">
                 <a href="#">
                   <i class="fa fa-briefcase"></i>
                   <span>Project</span>
                 </a>
               </li>
-              <li>
-                <a href="" @click="()=>{this.$router.push({name: 'CreateEmployee'})}">
+              <li :class="{ active: currentPage == '/Employee' }">
+                <a href="" @click="()=>{this.$router.push({name: 'Employee'})}">
                   <i class="fa fa-user-tie"></i>
                   <span>Employee</span>
                 </a>
               </li>
-              <li>
+              <li :class="{ active: currentPage == '/CreateUser' }">
                 <a href="" @click="()=>{this.$router.push({name: 'CreateUser'})}">
                   <i class="fa fa-user-alt"></i>
                   <span>User</span>
                 </a>
               </li>
-              <li>
+              <li :class="{ active: currentPage == '/PayrollGroup' }">
                 <a href="#">
                   <i class="fa fa-money-check"></i>
                   <span>Payroll Group</span>
                 </a>
               </li>
-              <li>
+              <li :class="{ active: currentPage == '/Compensation' }">
                 <a href="#">
                   <i class="fa fa-credit-card"></i>
                   <span>Compensation</span>
                 </a>
               </li>
-              <li>
+              <li :class="{ active: currentPage == '/Deduction' }">
                 <a href="#">
                   <i class="fa fa-funnel-dollar"></i>
                   <span>Deduction</span>
                 </a>
               </li>
-              <li>
+              <li :class="{ active: currentPage == '/Leave' }">
                 <a href="#">
                   <i class="fa fa-calendar-times"></i>
                   <span>Leave</span>
                 </a>
               </li>
-              <li>
+              <li :class="{ active: currentPage == '/LeaveCredit' }">
                 <a href="#">
                   <i class="fa fa-file-invoice"></i>
                   <span>Leave Credits</span>
                 </a>
               </li>
-              <li>
+              <li :class="{ active: currentPage == '/JournalCategory' }">
                 <a href="#">
                   <i class="fa fa-book"></i>
                   <span>Journal Category</span>
@@ -114,10 +113,19 @@
       </nav>
       <!-- sidebar-wrapper  -->
       <main class="page-content">
-        <div class="w-100 bg-white mt-0 d-flex p-3 justify-content-end">
-          <label class="align-self-center m-0 mr-2 p-0">Charlie Ching Olivera</label>
-          <img class="img-responsive rounded-circle align-self-center" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg" alt="User picture" style="width: 30px; height: 30px">
-        </div>
+        <nav class="navbar navbar-expand-sm bg-white">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link" href="#" id="navbardrop" data-toggle="dropdown">
+                <label class="align-self-center m-0 mr-2 p-0 text-dark">Charlie Ching Olivera</label>
+                <img class="img-responsive rounded-circle align-self-center" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg" alt="User picture" style="width: 30px; height: 30px">
+              </a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" @click="logout()">Logout</a>
+              </div>
+            </li>
+          </ul>
+        </nav>
         <router-view/>
       </main>
       <!-- page-content" -->
@@ -127,21 +135,33 @@
     <router-view/>
   </div>
 </template>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
 
 <script type="text/javascript">
   export default{
-    method: {
-      createEmployee() {
-
+    data(){
+      return{
+        currentPage: this.$route.path,
       }
     },
     created() {
       if (this.$store.state.api_host == 'charlie') {
-        this.$store.state.employee = 'http://localhost/PISBeta/Backend/Employee/api/'
+        this.$store.state.employee = 'http://localhost/PISBeta/Backend/Employees/api/'
         this.$store.state.company = 'http://localhost/PISBeta/Backend/Company/api/'
         this.$store.state.compensation = 'http://localhost/PISBeta/Backend/CompensationandDedution/api/'
       }
+    },
+    methods:{
+      logout(){
+        this.axios.post(this.$store.state.employee + 'logout?token=' + this.$session.get('token'))
+        .then(response => {
+          this.$session.destroy();
+          this.$router.push({name: 'Login'})
+        })
+        .catch(e => {
+          this.errors.push(e)
+        })
+      },
     },
     mounted() {
       $(".sidebar-dropdown > a").click(function() {
@@ -162,7 +182,12 @@
       $("#show-sidebar").click(function() {
         $(".page-wrapper").addClass("toggled");
       });
-    }
+    },
+    watch:{
+        $route (to, from){
+            // location.reload();
+        }
+    } 
   };
 </script>
 
@@ -768,10 +793,10 @@ body {
   border-radius: 4px;
 }
 
-.sidebar-wrapper .sidebar-menu ul li a:hover > i::before {
+/*.sidebar-wrapper .sidebar-menu ul li a:hover > i::before {
   display: inline-block;
   animation: swing ease-in-out 0.5s 1 alternate;
-}
+}*/
 
 .sidebar-wrapper .sidebar-menu .sidebar-dropdown > a:after {
   font-family: "Font Awesome 5 Free";
@@ -819,6 +844,19 @@ body {
   float: right;
   margin-top: 8px;
   margin-left: 5px;
+}
+
+
+.sidebar-wrapper .sidebar-menu ul li.active a span {
+  color: #c2c2c2;
+  font-weight: 400;
+}
+
+
+.sidebar-wrapper .sidebar-menu ul li.active a i {
+  /*color: #c2c2c2;*/
+  color: #00D3CD;
+  text-shadow: 0 0 15px #00D3CD;
 }
 
 .sidebar-wrapper .sidebar-menu .sidebar-dropdown .sidebar-submenu li a .badge,

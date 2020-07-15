@@ -14,12 +14,12 @@ class CreateDepartmentTable extends Migration
     public function up()
     {
         Schema::create('department', function (Blueprint $table) {
-            $table->string('department_id')->unique();
-            $table->string('company_id');
-            $table->string('department_name');
-            $table->string('department_head');
-            $table->string('department_description');
-            $table->boolean('department_status');
+            $table->string('id')->unique();
+            $table->string('company');
+            $table->string('name');
+            $table->string('head');
+            $table->string('description');
+            $table->boolean('status');
             $table->timestamps();
         });
     }

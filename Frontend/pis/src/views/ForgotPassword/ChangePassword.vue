@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 export default {
   name: 'ChangePassword',
   data() {
@@ -89,8 +90,14 @@ export default {
       }
     })
     .catch(e => {
-      this.error.push(e)
-      alert('error');
+        console.log(e);
+        Swal.fire({
+          icon: 'info',
+          title: 'Check your Connection!',
+          showConfirmButton: false,
+          timer: 4000,
+          onClose: this.$router.push({name: 'Login'})
+        })
     })
   },
   methods : {
@@ -107,8 +114,14 @@ export default {
         }
       })
       .catch(e => {
-        this.error.push(e)
-        alert('error');
+        console.log(e);
+        Swal.fire({
+          icon: 'info',
+          title: 'Check your Connection!',
+          showConfirmButton: false,
+          timer: 4000,
+          onClose: this.$router.push({name: 'Login'})
+        })
       })
     },
     changePassword(){
@@ -129,8 +142,14 @@ export default {
         }
       })
       .catch(e => {
-        this.error.push(e)
-        alert('error');
+        console.log(e);
+        Swal.fire({
+          icon: 'info',
+          title: 'Check your Connection!',
+          showConfirmButton: false,
+          timer: 4000,
+          onClose: this.$router.push({name: 'Login'})
+        })
       })
     },
     loginPage() {

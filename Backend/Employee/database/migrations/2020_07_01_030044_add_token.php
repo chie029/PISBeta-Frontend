@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Projects extends Migration
+class AddToken extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class Projects extends Migration
      */
     public function up()
     {
-        Schema::create('empoyee_project', function (Blueprint $table) {
-            $table->string('employee_id');
-            $table->string('project_id');
-            $table->timestamps();
+        Schema::table('employee', function ($table) {
+        $table->string('api_token', 80)->after('password')
+                        ->unique()
+                        ->nullable()
+                        ->default(null);
         });
     }
 
@@ -27,6 +28,6 @@ class Projects extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('empoyee_project');
+        Schema::dropIfExists('employee');
     }
 }

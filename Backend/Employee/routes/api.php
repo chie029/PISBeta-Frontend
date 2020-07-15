@@ -14,10 +14,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
+// Route::group([
+
+//     'middleware' => 'api',
+//     'prefix' => 'auth'
+
+// ], function ($router) {
+
+// 	Route::post('/user/login', 'UserController@login');
+
+// 	Route::get('/department', 'DepartmentController@index');
+// 	Route::post('/department/store', 'DepartmentController@store');
+// 	Route::post('/department/update', 'DepartmentController@update');
+
 // });
 
+Route::post('/user/createUser', 'UserController@createUser');
+Route::get('/user/getUsers', 'UserController@getUsers');
+Route::post('/user/login', 'UserController@login');
 
 Route::get('/department', 'DepartmentController@index');
 Route::post('/department/store', 'DepartmentController@store');
@@ -28,13 +42,12 @@ Route::post('/project/store', 'ProjectController@store');
 Route::post('/project/update', 'ProjectController@update');
 
 Route::get('/employee', 'EmployeeController@index');
+Route::post('/employee/show', 'EmployeeController@show');
 Route::post('/employee/store', 'EmployeeController@store');
+Route::post('/employee/edit', 'EmployeeController@edit');
 Route::post('/employee/update', 'EmployeeController@update');
 Route::get('/employee/user', 'EmployeeController@getNullUser');
 Route::post('/employee/assignCompensation', 'EmployeeController@assignCompensation');
-
-Route::post('/user/createUser', 'UserController@createUser');
-Route::post('/login', 'UserController@login');
 
 Route::post('/send', 'ForgotPasswordController@sendEmail');
 Route::post('/confirmCode', 'ForgotPasswordController@checkCode');

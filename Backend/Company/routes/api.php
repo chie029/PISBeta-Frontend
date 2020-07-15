@@ -20,7 +20,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/company', 'CompanyController@index');
-Route::post('/store', 'CompanyController@store');
-Route::post('/update', 'CompanyController@update');
-Route::get('/archived', 'CompanyController@archived');
-Route::post('/archive', 'CompanyController@archive');
+Route::get('/company/show/{id}', 'CompanyController@show');
+Route::post('/company/store', 'CompanyController@store');
+Route::get('/company/edit', 'CompanyController@edit');
+Route::put('/company/update', 'CompanyController@update');
+Route::get('/company/archived', 'CompanyController@archived');
+Route::post('/company/archive', 'CompanyController@archive');

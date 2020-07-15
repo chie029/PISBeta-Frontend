@@ -14,14 +14,17 @@ class CreateEmployee extends Migration
     public function up()
     {
         Schema::create('employee', function (Blueprint $table) {
-            $table->string('employee_id')->unique();
-            $table->object('employee_basic_information');
-            $table->object('employee_educational_background');
-            $table->object('employee_additional_information');
-            $table->object('employee_position');
-            $table->object('employee_payroll_details');
-            $table->object('employee_user_information');
-            $table->object('employee_compensation');
+            $table->string('id')->unique();
+            $table->string('email')->unique();
+            $table->object('basic_information');
+            $table->object('educational_background');
+            $table->object('additional_information');
+            $table->object('position');
+            $table->object('payroll_details');
+            $table->object('compensation');
+            $table->object('role');
+            $table->boolean('hasAccount');
+            $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });

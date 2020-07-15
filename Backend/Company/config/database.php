@@ -44,6 +44,16 @@ return [
             'password' => env('DB_PASSWORD'),
             'options'  => []
         ],
+        
+        'mongodb2' => [
+            'driver'   => 'mongodb',
+            'host'     => env('DB_HOST', 'localhost'),
+            'port'     => env('DB_PORT', 27017),
+            'database' => env('DBE_DATABASE'),
+            'username' => env('DB_USERNAME'),
+            'password' => env('DB_PASSWORD'),
+            'options'  => []
+        ],
 
         'sqlite' => [
             'driver' => 'sqlite',

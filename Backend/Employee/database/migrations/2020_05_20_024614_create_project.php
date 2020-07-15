@@ -14,14 +14,14 @@ class CreateProject extends Migration
     public function up()
     {
         Schema::create('project', function (Blueprint $table) {
-            $table->string('project_id')->unique();
-            $table->string('project_name');
-            $table->string('project_lead');
-            $table->string('project_description');
+            $table->string('id')->unique();
+            $table->string('name');
+            $table->string('lead');
+            $table->string('description');
             $table->string('created_by');
             $table->string('date_start');
             $table->string('date_end');
-            $table->string('deleted_by');
+            $table->string('isArchived');
             $table->timestamps();
         });
     }

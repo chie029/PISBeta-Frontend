@@ -1,5 +1,5 @@
 <template>
-	<div id="createuser">
+	<div id="company">
 		<div class="m-0 pt-5 px-5 bg-white">
 			<TableHeader
 				:header="header">
@@ -7,6 +7,7 @@
 			<Table
 				:rows="companies"
 				:cid="ids"
+				:page="page"
 				@search="search($event)">
 			</Table>
 		</div>
@@ -21,6 +22,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+import Swal from 'sweetalert2'
 import TableHeader from '@/components/Datatable/TableHeader.vue';
 import Table from '@/components/Datatable/Table.vue';
 import Pagination from '@/components/Datatable/Pagination.vue';
@@ -33,10 +35,13 @@ export default {
 	},
 	data() {
 		return {
+			isInvalid: '',
 			header: {
 				title: 'Company List',
 				description: 'Here is the list of the company.',
+				create: 'CreateCompany'
 			},
+			page: [ 'ShowCompany' ],
 			companies: [],
 			ids: [],
 			searchitem: '',
@@ -81,17 +86,19 @@ export default {
 			this.dataTable(url);
 		},
 		dataTable(url){
+			this.checkToken();
+
 			this.axios.get(url)
 			.then(response => {
 				this.companies = [];
 				this.ids = [];
 				console.log(response);
 				for (var i = response.data.data.data.length - 1; i >= 0; i--) {
-					var cid = response.data.data.data[i].company_id
-					var name = response.data.data.data[i].company_name
-					var code = response.data.data.data[i].company_code
-					var contact = response.data.data.data[i].company_contact
-					var address = response.data.data.data[i].company_address
+					var cid = response.data.data.data[i].id
+					var name = response.data.data.data[i].name
+					var code = response.data.data.data[i].code
+					var contact = response.data.data.data[i].contact
+					var address = response.data.data.data[i].address
 					this.companies.push({ 
 						'name': name, 
 						'code': code,
@@ -110,8 +117,37 @@ export default {
 				this.footer.current_page = response.data.data.current_page;
 			})
 			.catch(e => {
-				this.errors.push(e)
-				alert('error');
+				console.log(e);
+				Swal.fire({
+					icon: 'info',
+					title: 'Check your Connection!',
+					showConfirmButton: false,
+					timer: 4000,
+					onClose: this.$router.push({name: 'Login'})
+				})
+			})
+		},
+		checkToken(){
+			this.axios.get(this.$store.state.employee + 'get-auth?token=' + this.$session.get('token'))
+			.then(response => {
+				if (response.data.status == 'failed') {
+					Swal.fire({
+						icon: 'error',
+						title: response.data.result,
+						showConfirmButton: false,
+						timer: 4000,
+						onClose: this.$router.push({name: 'Login'})
+					})
+				}
+			})
+			.catch(e => {
+				console.log(e);
+				Swal.fire({
+					icon: 'info',
+					title: 'Check you Connection!',
+					showConfirmButton: false,
+					timer: 4000,
+				})
 			})
 		}
 	},
